@@ -66,12 +66,6 @@ impl eframe::App for MannaApp {
         eframe::set_value(storage, eframe::APP_KEY, self);
     }
 
-    /// Called each time the UI needs repainting, which may be many times per second.
-    /// Put your widgets into a `SidePanel`, `TopPanel`, `CentralPanel`, `Window` or `Area`.
-    /*fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
-
-    }*/
-
     fn ui(&mut self, ui: &mut egui::Ui, _frame: &mut eframe::Frame) {
         #[cfg(not(target_arch = "wasm32"))] // no File->Quit on web pages!
         egui::Panel::top("panel").show_inside(ui, |ui| {
@@ -130,56 +124,6 @@ impl eframe::App for MannaApp {
                 self.avalanche_sizes = vec![];
             }
 
-            // ui.label(format!("{:?}", self.avalanche_sizes));
-            /*ui.checkbox(&mut self.collisions, "Collisions");
-            ui.end_row();
-            ui.add(egui::Slider::new(&mut self.measure_time, 0.01..=1.0).text("Measuring time"));
-            ui.add(egui::Slider::new(&mut self.temperature, 0.0..=3.0).text("Temperature"));
-            ui.add(egui::Slider::new(&mut self.balls_n, 0..=1000).text("Balls number"));
-            ui.add(egui::Slider::new(&mut self.radius, 0.0..=0.03).text("Ball radius"));
-            ui.add(egui::Slider::new(&mut self.filter_height, 0.0..=1.0).text("Filter height"));
-            ui.add(egui::Slider::new(&mut self.wall_width, 0.0..=0.1).text("Wall width"));
-            */
-
-            /*
-            egui::ComboBox::from_label("Filter type:")
-                .selected_text(match self.filter_type {
-                    MaxwellType::Diode => "Diode",
-                    MaxwellType::Temperature {..} => "Temperature",
-                    MaxwellType::Tennis => "Tennis",
-                    MaxwellType::Empty => "Empty",
-                    MaxwellType::PhaseConserving {..} => "Phase conserving",
-                })
-                .show_ui(ui, |ui| {
-                    ui.selectable_value(&mut self.filter_type, MaxwellType::Diode, "Diode");
-                    ui.selectable_value(&mut self.filter_type, MaxwellType::Temperature { t: self.filter_temperature}, "Temperature");
-                    ui.selectable_value(&mut self.filter_type, MaxwellType::Tennis, "Tennis");
-                    ui.selectable_value(&mut self.filter_type, MaxwellType::PhaseConserving { c: self.filter_constant }, "Phase conserving");
-                    ui.selectable_value(&mut self.filter_type, MaxwellType::Empty, "Empty");
-                }
-            );
-
-            if let MaxwellType::Temperature { t } = &mut self.filter_type{
-                ui.add(egui::Slider::new(t, 0.0..=5.0).text("Filter temperature"));
-            }
-            else if let MaxwellType::PhaseConserving { c } = &mut self.filter_type{
-                ui.add(egui::Slider::new(c, 0.0..=1.0).text("Filter constant"));
-            }
-
-
-            if ui.button("Regenerate").clicked() {
-                self.simulation.random_initiation(self.balls_n, self.temperature, self.radius, self.filter_height, self.filter_type, self.collisions, self.wall_width);
-                self.points.clear();
-                self.time = 0.0;
-            }
-
-            let (left_count, right_symbol) = self.simulation.structure.count_balls(&self.simulation);
-            ui.label(format!("\nLeft side: {} balls,\nRight side: {} balls", left_count, right_symbol));
-            density = (left_count as f64)/((left_count + right_symbol) as f64)*100.0;
-            ui.label(format!("Left chamber density: {:.1} %", density));
-            ui.add_space(10.0);
-            */
-
             ui.with_layout(egui::Layout::bottom_up(egui::Align::LEFT), |ui| {
                 ui.horizontal(|ui| {
                     ui.spacing_mut().item_spacing.x = 0.0;
@@ -193,7 +137,7 @@ impl eframe::App for MannaApp {
         // want to plot something like f(x) = x⁻¹
         // 1 -
         if true {
-            if self.avalanche_sizes.len() % 10 == 0 && self.avalanche_sizes.len() > 0 {
+            if self.avalanche_sizes.len().is_multiple_of(10) && !self.avalanche_sizes.is_empty() {
                 let max = self.avalanche_sizes.iter().max().unwrap();
 
                 let n_steps = (self.avalanche_sizes.len() as f64).sqrt().ceil();
