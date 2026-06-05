@@ -1,2 +1,1 @@
-# See the link for the visualization:
-
+[The link to the visualization](https://sitandr.github.io/manna-1d/)

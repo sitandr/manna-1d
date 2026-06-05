@@ -166,10 +166,10 @@ impl eframe::App for MannaApp {
                 .resizable(true)
                 .show_inside(ui, |ui| {
                     Plot::new("data")
-                        .x_axis_label("Size, 10^n")
+                        .x_axis_label("Avalanche size")
                         .x_axis_formatter(|mark, _| format!("10^{:}", mark.value))
                         .y_axis_formatter(|mark, _| format!("10^{:.0}", mark.value))
-                        .y_axis_label("Number / size")
+                        .y_axis_label("Number of avalanches")
                         .min_size(Vec2::new(200., 150.))
                         .show(ui, |plot_ui| {
                             plot_ui.points(
