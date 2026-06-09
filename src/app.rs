@@ -124,6 +124,10 @@ impl eframe::App for MannaApp {
                 self.avalanche_sizes = vec![];
             }
 
+            if ui.button("Clear cells").clicked() {
+                self.simulation.cells = vec![(0, Modification::Ignored); self.simulation.width];
+            }
+
             ui.with_layout(egui::Layout::bottom_up(egui::Align::LEFT), |ui| {
                 ui.horizontal(|ui| {
                     ui.spacing_mut().item_spacing.x = 0.0;
@@ -239,7 +243,8 @@ impl eframe::App for MannaApp {
             }
 
             // egui::Area::new(egui::Id::new("display area")).default_size([500., 200.]).show(ui, |ui| {});
-            self.simulation.display(ui);
+            self.simulation.display(ui
+            );
 
             // painter.rect_stroke(rect, 1.0, Stroke::new(1.0, Color32::from_gray(16)), StrokeKind::Middle);
             // Make sure we allocate what we used (everything)
